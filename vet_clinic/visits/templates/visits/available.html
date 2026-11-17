@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Свободные врачи – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Свободные врачи</h1>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-auto">
+            <label for="date" class="col-form-label">Дата:</label>
+        </div>
+        <div class="col-auto">
+            <input
+                type="date"
+                id="date"
+                name="date"
+                value="{{ visit_date }}"
+                class="form-control"
+            >
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </div>
+    </form>
+
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+
+    {% if searched %}
+        <h2 class="h5">Дата: {{ visit_date }}</h2>
+        <ul class="list-group mb-3">
+            {% for doctor in doctors %}
+                <li class="list-group-item">
+                    {{ doctor.name }} – {{ doctor.specialization }}
+                </li>
+            {% empty %}
+                <li class="list-group-item">
+                    На выбранную дату свободных врачей нет.
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{% url 'visits:list' %}" class="btn btn-outline-secondary mt-3">
+        ← к списку посещений
+    </a>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Статистика – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Статистика клиники</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <h2 class="h6">Активных посещений</h2>
+                <p class="display-6 mb-0">{{ active_count }}</p>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <h2 class="h6">Отменённых посещений</h2>
+                <p class="display-6 mb-0">{{ cancelled_count }}</p>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <h2 class="h6">Завершённых посещений</h2>
+                <p class="display-6 mb-0">{{ completed_count }}</p>
+            </div></div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="card"><div class="card-body">
+                <h2 class="h6">Животных на учёте</h2>
+                <p class="display-6 mb-0">{{ age_stats.animals_count }}</p>
+            </div></div>
+        </div>
+    </div>
+
+    <h2 class="h5">Возраст животных</h2>
+    <p>
+        Средний: {{ age_stats.avg_age|default:"—" }},
+        минимальный: {{ age_stats.min_age|default:"—" }},
+        максимальный: {{ age_stats.max_age|default:"—" }}
+    </p>
+
+    <h2 class="h5">Животные по видам</h2>
+    <ul class="list-group mb-4">
+        {% for item in species_stats %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.species }}</span>
+                <span>
+                    {{ item.animals_count }}, средний возраст
+                    {{ item.avg_age }}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Данные отсутствуют.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="h5">Активные посещения по врачам</h2>
+    <ul class="list-group mb-4">
+        {% for item in doctor_stats %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.doctor_name }} ({{ item.specialization }})</span>
+                <span class="badge bg-info text-dark">
+                    {{ item.visits_count }}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Данные отсутствуют.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="h5">Активные посещения по специализациям</h2>
+    <ul class="list-group mb-4">
+        {% for item in specialization_stats %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.doctor__specialization }}</span>
+                <span class="badge bg-info text-dark">
+                    {{ item.visits_count }}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Данные отсутствуют.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="h5">Врачи с активными посещениями (не менее N)</h2>
+    <form method="get" class="row g-2 mb-2">
+        <div class="col-auto">
+            <label for="min" class="col-form-label">N:</label>
+        </div>
+        <div class="col-auto">
+            <input
+                type="number"
+                id="min"
+                name="min"
+                min="1"
+                value="{{ min_visits }}"
+                class="form-control"
+            >
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Показать</button>
+        </div>
+    </form>
+    <ul class="list-group mb-4">
+        {% for item in busy_doctors %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.doctor_name }}</span>
+                <span class="badge bg-info text-dark">
+                    {{ item.visits_count }}
+                </span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">
+                Врачей с таким числом активных посещений нет.
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="h5">Самые назначаемые препараты</h2>
+    <ul class="list-group mb-4">
+        {% for item in medication_stats %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.medication }}</span>
+                <span>{{ item.prescriptions_count }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Назначений пока нет.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

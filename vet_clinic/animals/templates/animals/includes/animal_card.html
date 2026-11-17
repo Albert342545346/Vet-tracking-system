@@ -1,0 +1,23 @@
+<article class="card animal-card mb-3">
+    <div class="card-body d-flex gap-3">
+        {% if animal.photo %}
+            <img src="{{ animal.photo.url }}" alt="{{ animal.name }}" class="animal-thumb">
+        {% endif %}
+        <div>
+            <h2 class="card-title">
+                {{ animal.name|default:"Без клички" }}
+                {% if animal.is_senior %}
+                    <span class="badge bg-warning text-dark fs-6">пожилое</span>
+                {% endif %}
+            </h2>
+
+            <p class="card-text">
+                {{ animal.species }}, {{ animal.age }} лет
+            </p>
+
+            <a href="{{ animal.get_absolute_url }}" class="btn btn-primary">
+                Подробнее
+            </a>
+        </div>
+    </div>
+</article>

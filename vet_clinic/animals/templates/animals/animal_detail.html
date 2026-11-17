@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ animal.name }} – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">
+                {{ animal.name }}
+                {% if animal.is_senior %}
+                    <span class="badge bg-warning text-dark fs-6">пожилое</span>
+                {% endif %}
+            </h1>
+
+            {% if animal.photo %}
+                <img src="{{ animal.photo.url }}" alt="{{ animal.name }}" class="img-fluid animal-photo mb-3">
+            {% else %}
+                <p class="text-muted">Фотография не загружена.</p>
+            {% endif %}
+
+            <p class="card-text">
+                <strong>ID:</strong> {{ animal.id }}
+            </p>
+
+            <p class="card-text">
+                <strong>Вид:</strong> {{ animal.species }}
+            </p>
+
+            <p class="card-text">
+                <strong>Возраст:</strong> {{ animal.age }} лет
+            </p>
+
+            <p class="card-text">
+                <strong>Владелец:</strong> {{ animal.owner }}
+            </p>
+
+            <h2 class="h5">История посещений ({{ visits|length }})</h2>
+            <ul class="list-group mb-3">
+                {% for visit in visits %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <a href="{% url 'visits:detail' visit.id %}">
+                            {{ visit.visit_date }} – {{ visit.doctor.name }}
+                        </a>
+                        {% include "visits/includes/visit_status.html" %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Посещений пока нет.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <a href="{% url 'animals:list' %}" class="btn btn-outline-secondary mt-3">
+        ← к списку животных
+    </a>
+{% endblock %}

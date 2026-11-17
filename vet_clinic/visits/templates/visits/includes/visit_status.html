@@ -1,0 +1,13 @@
+{% if visit.status == "cancelled" %}
+    <span class="badge bg-secondary visit-status visit-status-cancelled">
+        Отменено
+    </span>
+{% elif visit.status == "completed" %}
+    <span class="badge bg-primary visit-status visit-status-completed">
+        Завершено
+    </span>
+{% else %}
+    <span class="badge bg-success visit-status visit-status-active">
+        Активно
+    </span>
+{% endif %}

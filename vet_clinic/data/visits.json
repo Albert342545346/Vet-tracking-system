@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "animal_id": 1,
+        "doctor_id": 1,
+        "date": "2026-10-15",
+        "diagnosis": "Гастрит",
+        "is_cancelled": false,
+        "prescriptions": [
+            {
+                "medication": "Омепразол",
+                "dosage": "1 таб. утром",
+                "duration": "5 дней"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "animal_id": 2,
+        "doctor_id": 2,
+        "date": "2026-10-16",
+        "diagnosis": "",
+        "is_cancelled": false,
+        "prescriptions": []
+    },
+    {
+        "id": 3,
+        "animal_id": 3,
+        "doctor_id": 1,
+        "date": "2026-10-15",
+        "diagnosis": "",
+        "is_cancelled": true,
+        "prescriptions": []
+    },
+    {
+        "id": 4,
+        "animal_id": 1,
+        "doctor_id": 3,
+        "date": "2026-11-02",
+        "diagnosis": "",
+        "is_cancelled": false,
+        "prescriptions": []
+    }
+]

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Главная – VetClinic
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-4">VetClinic</h1>
+
+    <p class="lead">
+        Система учета ветеринарных посещений.
+    </p>
+    <p>
+        Приложение хранит данные о животных, врачах клиники, посещениях
+        и назначенном лечении. Данные хранятся в базе SQLite, доступ к ним выполняется через Django ORM; данные можно править в панели администратора (/admin/).
+    </p>
+    <p>Основные разделы:</p>
+    <a href="{% url 'animals:list' %}" class="btn btn-primary me-2">
+        Животные
+    </a>
+    <a href="{% url 'doctors:list' %}" class="btn btn-primary me-2">
+        Врачи
+    </a>
+    <a href="{% url 'visits:list' %}" class="btn btn-secondary me-2">
+        Посещения
+    </a>
+    <a href="{% url 'visits:statistics' %}" class="btn btn-secondary">
+        Статистика
+    </a>
+{% endblock %}

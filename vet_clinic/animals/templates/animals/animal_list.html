@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Животные – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Животные</h1>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-auto">
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                class="form-control"
+                placeholder="Кличка или владелец"
+                aria-label="Кличка или владелец"
+            >
+        </div>
+        <div class="col-auto">
+            <select name="species" class="form-select" aria-label="Вид">
+                <option value="">Все виды</option>
+                {% for item in species_list %}
+                    <option value="{{ item }}"
+                        {% if item == species %}selected{% endif %}>
+                        {{ item }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Найти</button>
+            <a href="{% url 'animals:list' %}" class="btn btn-outline-secondary">
+                Сбросить
+            </a>
+            <a href="{% url 'animals:create' %}" class="btn btn-success">
+                Добавить животное
+            </a>
+        </div>
+    </form>
+
+    <p>
+        {% if query or species %}Найдено животных{% else %}Всего животных{% endif %}:
+        {{ animals|length }}
+    </p>
+
+    {% for animal in animals %}
+        {% include "animals/includes/animal_card.html" %}
+    {% empty %}
+        <p>Животные не найдены.</p>
+    {% endfor %}
+{% endblock %}

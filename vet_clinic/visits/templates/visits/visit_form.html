@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if visit %}Редактирование посещения{% else %}Новое посещение{% endif %} – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    {% if visit %}
+        <h1>Редактирование посещения №{{ visit.id }}</h1>
+    {% else %}
+        <h1>Новое посещение</h1>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">
+            {% if visit %}Сохранить изменения{% else %}Создать посещение{% endif %}
+        </button>
+        <a href="{% url 'visits:list' %}" class="btn btn-outline-secondary">
+            Отмена
+        </a>
+    </form>
+{% endblock %}

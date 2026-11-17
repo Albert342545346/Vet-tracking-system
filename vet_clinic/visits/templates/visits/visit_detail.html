@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Посещение №{{ visit.id }} – {{ site_name }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">
+                Посещение №{{ visit.id }}
+            </h1>
+
+            <p class="card-text">
+                <strong>Животное:</strong>
+                <a href="{{ visit.animal.get_absolute_url }}">
+                    {{ visit.animal.name }}
+                </a>
+            </p>
+
+            <p class="card-text">
+                <strong>Врач:</strong>
+                {{ visit.doctor.name }} ({{ visit.doctor.specialization }})
+            </p>
+
+            <p class="card-text">
+                <strong>Дата:</strong> {{ visit.visit_date }}
+            </p>
+
+            <p class="card-text">
+                <strong>Диагноз:</strong>
+                {{ visit.diagnosis|default:"—" }}
+            </p>
+
+            <p class="card-text">
+                <strong>Статус:</strong>
+                {% include "visits/includes/visit_status.html" %}
+            </p>
+
+            <p class="card-text">
+                Врач на сегодняшнюю дату:
+                {% if doctor_available %}
+                    <span class="badge bg-success">свободен</span>
+                {% else %}
+                    <span class="badge bg-danger">занят</span>
+                {% endif %}
+            </p>
+
+            <h2 class="h5">Назначения ({{ prescriptions|length }})</h2>
+            <ul class="list-group mb-3">
+                {% for prescription in prescriptions %}
+                    <li class="list-group-item">
+                        {{ prescription.medication }},
+                        {{ prescription.dosage }},
+                        {{ prescription.duration }}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Назначений нет.</li>
+                {% endfor %}
+            </ul>
+
+            {% if visit.is_active %}
+                <a href="{% url 'visits:update' visit.id %}" class="btn btn-warning">
+                    Редактировать
+                </a>
+                <form method="post" action="{% url 'visits:cancel' visit.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger">
+                        Отменить посещение
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="{% url 'visits:list' %}" class="btn btn-outline-secondary mt-3">
+        ← к списку посещений
+    </a>
+{% endblock %}

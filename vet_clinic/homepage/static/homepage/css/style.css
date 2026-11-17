@@ -1,0 +1,54 @@
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.vetclinic-logo {
+    width: 96px;
+    height: auto;
+    margin: 1rem 0 0.5rem 1rem;
+}
+
+.nav {
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    border-bottom: 2px solid #1d8a80;
+}
+
+.animal-card {
+    padding: 0.5rem;
+    border: 1px solid #cfe6e3;
+    border-left: 6px solid #1d8a80;
+    border-radius: 8px;
+}
+
+.visit-status {
+    font-weight: 600;
+}
+
+.visit-status-cancelled {
+    text-decoration: line-through;
+}
+
+.visit-status-active {
+    letter-spacing: 0.02em;
+}
+
+.errorlist {
+    margin: 0.25rem 0 0;
+    padding-left: 1rem;
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+.animal-photo {
+    max-width: 320px;
+    border-radius: 8px;
+}
+
+.animal-thumb {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 8px;
+}
